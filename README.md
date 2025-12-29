@@ -39,8 +39,6 @@ http://localhost:3000
 ## 🎓 Academic Note
 This repository demonstrates the evolution...
 
-## 👤 Author
-Rishav Kundu
 Sania Mandal
 Sangni Singh
 Dev Shah
