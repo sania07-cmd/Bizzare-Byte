@@ -5,7 +5,7 @@ const path = require("path");
 
 const app = express();
 
-// DB connection (do not remove)
+// DB connection
 require("./db");
 
 // Middleware
@@ -28,6 +28,11 @@ app.set("views", path.join(__dirname, "views"));
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
 
+// Home
+app.get("/", (req, res) => {
+  res.render("index");
+});
+
 // Routes
 app.use("/", require("./routes/authRoutes"));
 app.use("/admin", require("./routes/adminRoutes"));
@@ -39,13 +44,8 @@ app.get("/logout", (req, res) => {
   req.session.destroy(() => res.redirect("/"));
 });
 
-// Home
-app.get("/", (req, res) => {
-  res.render("index");
-});
-
-// 🚨 THIS IS THE KEY FIX
-const PORT = process.env.PORT;
+// ✅ FINAL FIX
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
