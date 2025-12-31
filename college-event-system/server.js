@@ -5,8 +5,14 @@ const path = require("path");
 
 const app = express();
 
-// DB connection (keep as-is)
+// DB connection
 require("./db");
+
+// Routes
+const authRoutes = require("./routes/authRoutes");
+const adminRoutes = require("./routes/adminRoutes");
+const studentRoutes = require("./routes/studentRoutes");
+const organiserRoutes = require("./routes/organiserRoutes");
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,42 +34,28 @@ app.set("views", path.join(__dirname, "views"));
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
 
-/* =========================
-   HEALTH CHECK (IMPORTANT)
-   ========================= */
-app.get("/", (req, res) => {
-  res.status(200).send("College Event System is running 🚀");
-});
-
 // Routes
-const authRoutes = require("./routes/authRoutes");
-const adminRoutes = require("./routes/adminRoutes");
-const studentRoutes = require("./routes/studentRoutes");
-const organiserRoutes = require("./routes/organiserRoutes");
-
-app.use("/auth", authRoutes);
+app.use("/", authRoutes);
 app.use("/admin", adminRoutes);
 app.use("/student", studentRoutes);
 app.use("/organiser", organiserRoutes);
 
-// Logout route
+// Logout
 app.get("/logout", (req, res) => {
-  req.session.destroy(err => {
-    if (err) {
-      console.error(err);
-      return res.redirect("/");
-    }
-    res.redirect("/");
-  });
+  req.session.destroy(() => res.redirect("/"));
 });
 
-// ✅ SERVER START (RAILWAY COMPATIBLE)
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+// Home
+app.get("/", (req, res) => {
+  res.render("index");
 });
 
-app.listen(PORT, () => {
+/* ============================
+   🚨 ONLY THIS PORT CONFIG
+   ============================ */
+const PORT = process.env.PORT;
+
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
 
