@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 // Session setup
 app.use(
   session({
-    secret: "college_event_secret",
+    secret: process.env.SESSION_SECRET || "college_event_secret",
     resave: false,
     saveUninitialized: true,
   })
@@ -40,7 +40,7 @@ app.use("/admin", adminRoutes);
 app.use("/student", studentRoutes);
 app.use("/organiser", organiserRoutes);
 
-// ✅ LOGOUT ROUTE (for admin & student)
+// Logout route (admin & student)
 app.get("/logout", (req, res) => {
   req.session.destroy(err => {
     if (err) {
@@ -50,13 +50,16 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
   });
 });
+
 // Home route
 app.get("/", (req, res) => {
   res.render("index");
 });
 
-// Server start
-const PORT = 3000;
+// ✅ SERVER START (THIS PART IS CRITICAL FOR RAILWAY)
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
+
