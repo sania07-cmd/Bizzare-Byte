@@ -1,17 +1,12 @@
 const mysql = require("mysql2");
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",          // change if your MySQL username is different
-  password: "Prometheus30$", // 🔴 put your MySQL password here
-  database: "college_event_system"
-});
+const db = mysql.createConnection(process.env.MYSQL_URL);
 
 db.connect((err) => {
   if (err) {
-    console.error("❌ MySQL connection failed:", err);
+    console.error("❌ MySQL connection failed:", err.message);
   } else {
-    console.log("✅ Connected to MySQL database");
+    console.log("✅ Connected to Railway MySQL");
   }
 });
 
