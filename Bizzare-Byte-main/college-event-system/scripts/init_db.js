@@ -80,5 +80,5 @@ db.query(initSql, (err) => {
   }
 
   console.log('Database initialized successfully.');
-  db.end();
+  // Removed db.end() to keep connection open for the server
 });
