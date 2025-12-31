@@ -7,6 +7,9 @@ const db = mysql.createConnection({
   database: process.env.MYSQLDATABASE,
   port: process.env.MYSQLPORT,
   multipleStatements: true,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 db.connect((err) => {

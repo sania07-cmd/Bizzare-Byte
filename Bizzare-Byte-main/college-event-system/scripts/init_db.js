@@ -58,22 +58,32 @@ const tables = [
   `INSERT IGNORE INTO admin (username, password) VALUES ('admin', 'admin123')`
 ];
 
-let index = 0;
-
-function runNext() {
-  if (index >= tables.length) {
-    console.log('Database initialized successfully.');
-    return;
+db.connect((err) => {
+  if (err) {
+    console.error('Database connection failed:', err);
+    process.exit(1);
   }
 
-  db.query(tables[index], (err) => {
-    if (err) {
-      console.error('Error initializing database:', err);
-      process.exit(1);
-    }
-    index++;
-    runNext();
-  });
-}
+  console.log('Connected to database. Initializing tables...');
 
-runNext();
+  let index = 0;
+
+  function runNext() {
+    if (index >= tables.length) {
+      console.log('Database initialized successfully.');
+      process.exit(0); // Exit successfully after init
+      return;
+    }
+
+    db.query(tables[index], (err) => {
+      if (err) {
+        console.error('Error creating table:', err);
+        process.exit(1);
+      }
+      index++;
+      runNext();
+    });
+  }
+
+  runNext();
+});
