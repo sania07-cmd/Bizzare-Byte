@@ -3,6 +3,7 @@
 **College Event Management System**
 
 🌐 **Live Website:** [https://bizzare-byte-production.up.railway.app](https://bizzare-byte-production.up.railway.app)
+
 📦 **Repository:** [https://github.com/Rishav-Kundu/Bizzare-Byte](https://github.com/Rishav-Kundu/Bizzare-Byte)
 
 ---
@@ -140,6 +141,9 @@ You are free to fork and modify it for learning and non-commercial use.
 
 ## 👤 Authors
 Rishav Kundu
+
 Sania Mandal
+
 Sangni
+
 Dev Shah
